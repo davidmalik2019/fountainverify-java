@@ -87,7 +87,23 @@ To run the project locally, you will need:
    `http://localhost:8080`
 
    The exact pages available depend on the application's configured routes.
+## Testing
 
+The project includes automated tests using the Spring Boot testing framework.
+
+To run the tests on Windows, ensure MySQL is running and the local database configuration is correct, then execute:
+
+```cmd
+mvnw.cmd test
+```
+
+To run a clean build and package the application:
+
+```cmd
+mvnw.cmd clean package
+```
+
+**Verified locally:** The test command completed successfully, and the clean package build succeeded with MySQL running.
 ## Security
 
 - Do not commit database passwords, secret keys, or other private credentials.
