@@ -1,0 +1,240 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My QR Codes - Fountain Verify</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        .header {
+            background: #071d49;
+            color: white;
+            padding: 25px 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            letter-spacing: 1px;
+        }
+
+        .header p {
+            margin: 8px 0 0;
+            font-size: 15px;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 1100px;
+            margin: 35px auto;
+        }
+
+        .title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .title h2 {
+            color: #071d49;
+            margin-bottom: 8px;
+        }
+
+        .title p {
+            color: #666;
+        }
+
+        .qr-grid {
+            display: grid;
+            grid-template-columns: repeat(
+                auto-fit,
+                minmax(280px, 1fr)
+            );
+            gap: 25px;
+        }
+
+        .qr-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
+        }
+
+        .qr-card h3 {
+            color: #071d49;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .certificate-number {
+            font-weight: bold;
+            color: #444;
+            margin-bottom: 20px;
+        }
+
+        .qr-image {
+            display: block;
+            width: 260px;
+            max-width: 100%;
+            height: auto;
+            margin: 10px auto 20px;
+            border: 8px solid white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+        }
+
+        .recipient {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 18px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 11px 20px;
+            background: #071d49;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+
+        .button:hover {
+            background: #0d3278;
+        }
+
+        .empty {
+            background: white;
+            padding: 45px 25px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
+        }
+
+        .empty h3 {
+            color: #071d49;
+        }
+
+        .back {
+            text-align: center;
+            margin-top: 35px;
+        }
+
+        .back a {
+            color: #071d49;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+
+        <h1>FOUNTAIN VERIFY</h1>
+
+        <p>
+            Welcome,
+            <strong th:text="${username}">User</strong>
+        </p>
+
+    </div>
+
+    <div class="container">
+
+        <div class="title">
+
+            <h2>My QR Codes</h2>
+
+            <p>
+                QR codes for certificates issued to your
+                Fountain Verify account.
+            </p>
+
+        </div>
+
+        <div th:if="${certificates != null and !certificates.isEmpty()}"
+             class="qr-grid">
+
+            <div class="qr-card"
+                 th:each="certificate : ${certificates}">
+
+                <h3 th:text="${certificate.courseName}">
+                    Certificate Course
+                </h3>
+
+                <div class="certificate-number">
+
+                    Certificate No:
+                    <span th:text="${certificate.certificateNumber}">
+                        FV-2026-0001
+                    </span>
+
+                </div>
+
+                <img class="qr-image"
+                     th:if="${certificate.qrCode != null}"
+                     th:src="'data:image/png;base64,' + ${certificate.qrCode}"
+                     alt="Certificate QR Code">
+
+                <div class="recipient">
+
+                    Recipient:
+                    <strong th:text="${certificate.recipientName}">
+                        David Malik
+                    </strong>
+
+                </div>
+
+                <!-- Student-specific route with ownership check -->
+                <a class="button"
+                   th:href="@{/my-certificates/view/{id}(id=${certificate.id})}">
+                    View Certificate
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="empty"
+             th:if="${certificates == null or certificates.isEmpty()}">
+
+            <h3>No QR Codes Yet</h3>
+
+            <p>
+                You currently have no certificate QR codes
+                associated with your Fountain Verify account.
+            </p>
+
+        </div>
+
+        <div class="back">
+
+            <a th:href="@{/dashboard}">
+                ← Back to Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

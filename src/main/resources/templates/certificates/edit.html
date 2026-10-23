@@ -1,0 +1,382 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Fountain Verify - Edit Certificate</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        .header {
+            background: #062d6e;
+            color: white;
+            padding: 20px 30px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .card h2 {
+            margin-top: 0;
+            color: #062d6e;
+        }
+
+        .description {
+            color: #777;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #062d6e;
+            box-shadow: 0 0 0 2px rgba(6, 45, 110, 0.1);
+        }
+
+        .certificate-number {
+            background: #f5f5f5;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 20px;
+            border: none;
+            background: #062d6e;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background: #041f4d;
+        }
+
+        .cancel {
+            background: #777;
+        }
+
+        .cancel:hover {
+            background: #555;
+        }
+
+        .info-box {
+            background: #f4f7fb;
+            border-left: 4px solid #062d6e;
+            padding: 13px 15px;
+            margin-bottom: 25px;
+            color: #555;
+            font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+
+            .container {
+                margin: 25px auto;
+                padding: 0 12px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .button {
+                width: 100%;
+                text-align: center;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="header">
+
+        <h1>Fountain Verify</h1>
+
+    </div>
+
+
+    <div class="container">
+
+        <div class="card">
+
+
+            <h2>Edit Certificate</h2>
+
+            <p class="description">
+                Update the information for this Fountain Verify certificate.
+            </p>
+
+
+            <div class="info-box">
+
+                You are editing certificate:
+
+                <strong th:text="${certificate.certificateNumber}">
+                    FV-2026-0001
+                </strong>
+
+            </div>
+
+
+            <form
+                th:action="@{/certificates/edit/{id}(id=${certificate.id})}"
+                method="post">
+
+
+                <div class="form-group">
+
+                    <label for="certificateNumber">
+                        Certificate Number
+                    </label>
+
+                    <input
+                        type="text"
+                        id="certificateNumber"
+                        name="certificateNumber"
+                        th:value="${certificate.certificateNumber}"
+                        class="certificate-number"
+                        readonly>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="recipientName">
+                        Recipient Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="recipientName"
+                        name="recipientName"
+                        th:value="${certificate.recipientName}"
+                        required>
+
+                </div>
+				<div class="form-group">
+
+				    <label for="userId">
+				        Certificate Account (Student/User)
+				    </label>
+
+				    <select
+				        id="userId"
+				        name="userId"
+				        required>
+
+				        <option
+				            th:each="user : ${users}"
+				            th:value="${user.id}"
+				            th:text="${user.username}"
+				            th:selected="${certificate.user != null and certificate.user.id == user.id}">
+				        </option>
+
+				    </select>
+
+				    <small>
+				        Select the account that should display this certificate
+				        under My Certificates.
+				    </small>
+
+				</div>
+
+                <div class="form-group">
+
+                    <label for="courseName">
+                        Course / Program
+                    </label>
+
+                    <input
+                        type="text"
+                        id="courseName"
+                        name="courseName"
+                        th:value="${certificate.courseName}"
+                        required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="issuerName">
+                        Issuer
+                    </label>
+
+                    <input
+                        type="text"
+                        id="issuerName"
+                        name="issuerName"
+                        th:value="${certificate.issuerName}"
+                        required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="issueDate">
+                        Issue Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="issueDate"
+                        name="issueDate"
+                        th:value="${certificate.issueDate}"
+                        required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="expiryDate">
+                        Expiry Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="expiryDate"
+                        name="expiryDate"
+                        th:value="${certificate.expiryDate}">
+
+                </div>
+
+
+				
+				<div class="form-group">
+
+				    <label for="status">
+				        Certificate Status
+				    </label>
+
+				    <select
+				        id="status"
+				        name="status"
+				        required>
+
+				        <option
+				            value="ACTIVE"
+				            th:selected="${certificate.status == 'ACTIVE'}">
+				            ACTIVE
+				        </option>
+
+				        <option
+				            value="BLOCKED"
+				            th:selected="${certificate.status == 'BLOCKED'}">
+				            BLOCKED
+				        </option>
+
+				        <option
+				            value="EXPIRED"
+				            th:selected="${certificate.status == 'EXPIRED'}">
+				            EXPIRED
+				        </option>
+
+				        <option
+				            value="REVOKED"
+				            th:selected="${certificate.status == 'REVOKED'}">
+				            REVOKED
+				        </option>
+
+				    </select>
+
+				</div>
+				
+
+                <div class="button-group">
+
+                    <button
+                        type="submit"
+                        class="button">
+                        Save Changes
+                    </button>
+
+                    <a
+                        th:href="@{/certificates/view/{id}(id=${certificate.id})}"
+                        class="button cancel">
+                        Cancel
+                    </a>
+
+                </div>
+
+
+            </form>
+
+
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>

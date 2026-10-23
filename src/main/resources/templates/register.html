@@ -1,0 +1,205 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Fountain Verify - Registration</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(135deg, #eef3f8, #ffffff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .register-container {
+            width: 100%;
+            max-width: 450px;
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.12);
+            overflow: hidden;
+        }
+
+        .register-header {
+            background: #071f3d;
+            color: #ffffff;
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .register-header h1 {
+            margin: 0 0 8px;
+            font-size: 26px;
+        }
+
+        .register-header p {
+            margin: 0;
+            color: #d9e6f4;
+            font-size: 14px;
+        }
+
+        .register-content {
+            padding: 30px 25px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: 600;
+            color: #333333;
+        }
+
+        .form-group input {
+            width: 100%;
+            height: 46px;
+            padding: 0 13px;
+            border: 1px solid #cbd5e1;
+            border-radius: 7px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: #071f3d;
+        }
+
+        .register-button {
+            width: 100%;
+            height: 46px;
+            border: none;
+            border-radius: 7px;
+            background: #071f3d;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .register-button:hover {
+            background: #0d315d;
+        }
+
+        .success-message {
+            background: #eaf8ef;
+            border: 1px solid #a7dcb8;
+            color: #137a37;
+            padding: 12px;
+            border-radius: 7px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .error-message {
+            background: #fff0f0;
+            border: 1px solid #e3aaaa;
+            color: #b42323;
+            padding: 12px;
+            border-radius: 7px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .register-footer {
+            text-align: center;
+            background: #f7f9fb;
+            border-top: 1px solid #e5e5e5;
+            padding: 15px;
+            color: #777777;
+            font-size: 13px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="register-container">
+
+    <div class="register-header">
+        <h1>Fountain Verify</h1>
+        <p>Registration &amp; Verification System</p>
+    </div>
+
+    <div class="register-content">
+
+        <div th:if="${success}"
+             class="success-message"
+             th:text="${success}">
+        </div>
+
+        <div th:if="${error}"
+             class="error-message"
+             th:text="${error}">
+        </div>
+
+        <form th:action="@{/register}" method="post">
+
+            <div class="form-group">
+                <label for="username">Username</label>
+
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    autocomplete="username"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    autocomplete="email"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    autocomplete="new-password"
+                    required
+                >
+            </div>
+
+            <button type="submit" class="register-button">
+                Register
+            </button>
+
+        </form>
+
+    </div>
+
+    <div class="register-footer">
+        Fountain Information Service<br>
+        Fountain Verify Registration System
+    </div>
+
+</div>
+
+</body>
+</html>

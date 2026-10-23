@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Certificates - Fountain Verify</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        .header {
+            background: #061a3a;
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .header span {
+            font-size: 15px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .page-title {
+            margin-bottom: 25px;
+        }
+
+        .page-title h2 {
+            margin: 0 0 8px;
+            color: #061a3a;
+        }
+
+        .page-title p {
+            margin: 0;
+            color: #666;
+        }
+
+        .certificate-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .certificate-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            border-top: 5px solid #061a3a;
+        }
+
+        .certificate-card h3 {
+            margin-top: 0;
+            color: #061a3a;
+            font-size: 19px;
+        }
+
+        .certificate-number {
+            font-weight: bold;
+            color: #444;
+            margin-bottom: 15px;
+        }
+
+        .details {
+            line-height: 1.8;
+            font-size: 14px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            background: #e8f7ee;
+            color: #16803c;
+            font-weight: bold;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
+        .buttons {
+            margin-top: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            text-decoration: none;
+            background: #061a3a;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            margin-right: 8px;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .empty {
+            background: white;
+            padding: 40px;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+        }
+
+        .empty h3 {
+            color: #061a3a;
+            margin-bottom: 10px;
+        }
+
+        .back {
+            margin-top: 30px;
+        }
+
+        .back a {
+            text-decoration: none;
+            color: #061a3a;
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+
+            .header {
+                padding: 18px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .container {
+                margin: 25px auto;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+    <h1>FOUNTAIN VERIFY</h1>
+
+    <span>
+        Welcome,
+        <strong th:text="${username}">User</strong>
+    </span>
+
+</div>
+
+
+<div class="container">
+
+    <div class="page-title">
+
+        <h2>My Certificates</h2>
+
+        <p>
+            View certificates issued to your Fountain Verify account.
+        </p>
+
+    </div>
+
+
+    <!-- Certificates available -->
+
+    <div class="certificate-grid"
+         th:if="${not #lists.isEmpty(certificates)}">
+
+        <div class="certificate-card"
+             th:each="certificate : ${certificates}">
+
+            <h3 th:text="${certificate.courseName}">
+                Course Name
+            </h3>
+
+            <div class="certificate-number">
+
+                Certificate No:
+                <span th:text="${certificate.certificateNumber}">
+                    FV-2026-0001
+                </span>
+
+            </div>
+
+            <div class="details">
+
+                <div>
+                    <strong>Recipient:</strong>
+                    <span th:text="${certificate.recipientName}">
+                        User Name
+                    </span>
+                </div>
+
+                <div>
+                    <strong>Issue Date:</strong>
+                    <span th:text="${certificate.issueDate}">
+                        2026-01-01
+                    </span>
+                </div>
+
+                <div th:if="${certificate.expiryDate != null}">
+
+                    <strong>Expiry Date:</strong>
+                    <span th:text="${certificate.expiryDate}">
+                        2027-01-01
+                    </span>
+
+                </div>
+
+                <div>
+                    <strong>Issuer:</strong>
+                    <span th:text="${certificate.issuerName}">
+                        Fountain Information Service
+                    </span>
+                </div>
+
+                <div>
+
+                    <span class="status"
+                          th:text="${certificate.status}">
+                        ACTIVE
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="buttons">
+
+				<a class="btn"
+				   th:href="@{/my-certificates/view/{id}(id=${certificate.id})}">
+				    View Certificate
+				</a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- No certificates -->
+
+    <div class="empty"
+         th:if="${#lists.isEmpty(certificates)}">
+
+        <h3>No Certificates Yet</h3>
+
+        <p>
+            You currently have no certificates associated
+            with your Fountain Verify account.
+        </p>
+
+    </div>
+
+
+    <div class="back">
+
+        <a href="/dashboard">
+            ← Back to Dashboard
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,495 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Fountain Verify - Certificates</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        .header {
+            background: #062d6e;
+            color: white;
+            padding: 20px 30px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .container {
+            max-width: 1250px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .title-section h2 {
+            margin: 0 0 6px 0;
+            color: #062d6e;
+        }
+
+        .title-section p {
+            margin: 0;
+            color: #777;
+            font-size: 14px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 11px 18px;
+            background: #062d6e;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .button:hover {
+            background: #041f4d;
+        }
+
+        .back {
+            background: #777;
+        }
+
+        .back:hover {
+            background: #555;
+        }
+
+        .summary {
+            background: #f4f7fb;
+            border-left: 4px solid #062d6e;
+            padding: 14px 16px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            color: #444;
+            font-size: 14px;
+        }
+
+        .summary strong {
+            color: #062d6e;
+            font-size: 16px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+		
+		.delete-button {
+		    display: inline-block;
+		    padding: 7px 13px;
+		    background: #c62828;
+		    color: white;
+		    border: none;
+		    text-decoration: none;
+		    border-radius: 5px;
+		    font-size: 13px;
+		    font-weight: bold;
+		    margin-left: 5px;
+		    cursor: pointer;
+		}
+
+		.delete-button:hover {
+		    background: #a61f1f;
+		}
+		
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            min-width: 900px;
+        }
+
+        th,
+        td {
+            padding: 14px 13px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #062d6e;
+            color: white;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+
+        td {
+            font-size: 14px;
+        }
+
+        tr:hover {
+            background: #f7f9fc;
+        }
+
+        .certificate-number {
+            font-weight: bold;
+            color: #062d6e;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 5px 11px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .status-active {
+            background: #dff5e5;
+            color: #18733c;
+        }
+
+        .status-expired {
+            background: #fff1cc;
+            color: #9a6a00;
+        }
+
+        .status-revoked {
+            background: #f8d7da;
+            color: #a11a27;
+        }
+
+        .status-default {
+            background: #e5e7eb;
+            color: #555;
+        }
+
+        .view-button {
+            display: inline-block;
+            padding: 7px 13px;
+            background: #1683d8;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+		.edit-button {
+		    display: inline-block;
+		    padding: 7px 13px;
+		    background: #062d6e;
+		    color: white;
+		    text-decoration: none;
+		    border-radius: 5px;
+		    font-size: 13px;
+		    font-weight: bold;
+		    margin-left: 5px;
+		}
+
+		.edit-button:hover {
+		    background: #041f4d;
+		}
+
+        .view-button:hover {
+            background: #0d6fae;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 40px 30px;
+            color: #777;
+        }
+
+        .empty-icon {
+            font-size: 35px;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 700px) {
+
+            .header {
+                padding: 18px 20px;
+            }
+
+            .container {
+                margin: 25px auto;
+                padding: 0 12px;
+            }
+
+            .card {
+                padding: 20px 15px;
+            }
+
+            .top-bar {
+                align-items: flex-start;
+            }
+
+            .button-group {
+                width: 100%;
+            }
+
+            .button {
+                flex: 1;
+                text-align: center;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="header">
+
+        <h1>Fountain Verify</h1>
+
+    </div>
+
+
+    <div class="container">
+
+        <div class="card">
+
+
+            <div class="top-bar">
+
+                <div class="title-section">
+
+                    <h2>Certificate Management</h2>
+
+                    <p>
+                        Manage and view certificates issued through Fountain Verify.
+                    </p>
+
+                </div>
+
+
+                <div class="button-group">
+
+                    <a href="/certificates/create" class="button">
+                        + Create Certificate
+                    </a>
+
+                    <a href="/dashboard" class="button back">
+                        Dashboard
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div class="summary">
+
+                <strong th:text="${#lists.size(certificates)}">
+                    0
+                </strong>
+
+                certificate(s) currently available in Fountain Verify.
+
+            </div>
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Certificate Number</th>
+
+                            <th>Recipient Name</th>
+
+                            <th>Course / Program</th>
+
+                            <th>Issuer</th>
+
+                            <th>Issue Date</th>
+
+                            <th>Status</th>
+
+                            <th>Action</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                        <tr th:each="certificate : ${certificates}">
+
+
+                            <td>
+
+                                <span
+                                    class="certificate-number"
+                                    th:text="${certificate.certificateNumber}">
+
+                                    FIS-2026-0001
+
+                                </span>
+
+                            </td>
+
+
+                            <td th:text="${certificate.recipientName}">
+
+                                Recipient Name
+
+                            </td>
+
+
+                            <td th:text="${certificate.courseName}">
+
+                                Course Name
+
+                            </td>
+
+
+                            <td th:text="${certificate.issuerName}">
+
+                                Fountain Information Service
+
+                            </td>
+
+
+                            <td th:text="${certificate.issueDate}">
+
+                                2026-10-02
+
+                            </td>
+
+
+                            <td>
+
+                                <span
+                                    class="status"
+                                    th:classappend="${certificate.status == 'ACTIVE'} ? ' status-active' :
+                                                    (${certificate.status == 'EXPIRED'} ? ' status-expired' :
+                                                    (${certificate.status == 'REVOKED'} ? ' status-revoked' :
+                                                    ' status-default'))"
+                                    th:text="${certificate.status}">
+
+                                    ACTIVE
+
+                                </span>
+
+                            </td>
+
+
+							
+							<td>
+
+							    <a
+							        th:href="@{/certificates/view/{id}(id=${certificate.id})}"
+							        class="view-button">
+
+							        View
+
+							    </a>
+
+							    <a
+							        th:href="@{/certificates/edit/{id}(id=${certificate.id})}"
+							        class="edit-button">
+
+							        Edit
+
+							    </a>
+
+							    <form
+							        th:action="@{/certificates/delete/{id}(id=${certificate.id})}"
+							        method="post"
+							        style="display:inline;"
+							        onsubmit="return confirm('Are you sure you want to delete this certificate? This action cannot be undone.');">
+
+							        <button
+							            type="submit"
+							            class="delete-button">
+
+							            Delete
+
+							        </button>
+
+							    </form>
+
+							</td>
+							
+
+
+                        </tr>
+
+
+                        <tr th:if="${#lists.isEmpty(certificates)}">
+
+                            <td colspan="7" class="empty">
+
+                                <div class="empty-icon">
+                                    📜
+                                </div>
+
+                                <strong>No certificates found</strong>
+
+                                <br>
+
+                                No certificates have been created yet.
+
+                            </td>
+
+                        </tr>
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>

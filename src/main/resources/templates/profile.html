@@ -1,0 +1,214 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Profile - Fountain Verify</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        .header {
+            background: #071d49;
+            color: white;
+            padding: 25px 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            letter-spacing: 1px;
+        }
+
+        .header p {
+            margin: 8px 0 0;
+            font-size: 15px;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 700px;
+            margin: 40px auto;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 14px;
+            padding: 35px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .profile-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .profile-title h2 {
+            color: #071d49;
+            margin-bottom: 8px;
+        }
+
+        .profile-title p {
+            color: #666;
+            margin: 0;
+        }
+
+        .profile-row {
+            padding: 18px 0;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .profile-row:last-child {
+            border-bottom: none;
+        }
+
+        .label {
+            font-size: 13px;
+            color: #777;
+            margin-bottom: 6px;
+        }
+
+        .value {
+            font-size: 17px;
+            font-weight: bold;
+            color: #071d49;
+            word-break: break-word;
+        }
+
+        .buttons {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 22px;
+            margin: 5px;
+            background: #071d49;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+
+        .button:hover {
+            background: #0d3278;
+        }
+
+        .back {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .back a {
+            color: #071d49;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+
+            .profile-card {
+                padding: 25px 20px;
+            }
+
+            .button {
+                display: block;
+                margin: 10px 0;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+
+        <h1>FOUNTAIN VERIFY</h1>
+
+        <p>
+            My Profile
+        </p>
+
+    </div>
+
+    <div class="container">
+
+        <div class="profile-card">
+
+            <div class="profile-title">
+
+                <h2>My Profile</h2>
+
+                <p>
+                    Your Fountain Verify account information
+                </p>
+
+            </div>
+
+            <div class="profile-row">
+
+                <div class="label">
+                    Username
+                </div>
+
+                <div class="value"
+                     th:text="${user.username}">
+                    david
+                </div>
+
+            </div>
+
+            <div class="profile-row">
+
+                <div class="label">
+                    Email Address
+                </div>
+
+                <div class="value"
+                     th:text="${user.email}">
+                    email@example.com
+                </div>
+
+            </div>
+
+            <div class="buttons">
+
+                <a class="button"
+                   href="/dashboard">
+                    Back to Dashboard
+                </a>
+
+            </div>
+
+            <div class="back">
+
+                <a href="/my-certificates">
+                    View My Certificates →
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
+

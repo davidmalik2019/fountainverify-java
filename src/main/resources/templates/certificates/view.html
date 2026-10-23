@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+<title>Fountain Verify - Certificate</title>
+
+<style>
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background: #eef3f8;
+        color: #222;
+    }
+
+    .header {
+        background: #071f3d;
+        color: white;
+        text-align: center;
+        padding: 14px 20px;
+    }
+
+    .header h1 {
+        margin: 0;
+        font-size: 22px;
+        letter-spacing: 1px;
+    }
+
+    .header p {
+        margin: 4px 0 0;
+        color: #d9e6f4;
+        font-size: 12px;
+    }
+
+    .container {
+        max-width: 1100px;
+        margin: 25px auto;
+        padding: 0 15px;
+    }
+
+    /* CERTIFICATE */
+
+    .certificate {
+        position: relative;
+
+        /* FIS LIGHT BLUE / WHITE BACKGROUND */
+        background: linear-gradient(
+            135deg,
+            #eef5fb 0%,
+            #ffffff 45%,
+            #e8f1f8 100%
+        );
+
+        border: 7px solid #071f3d;
+        padding: 30px 40px;
+        text-align: center;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.10);
+    }
+
+    /* INNER CERTIFICATE BORDER */
+
+    .certificate::before {
+        content: "";
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+        border: 1px solid rgba(7, 31, 61, 0.18);
+        pointer-events: none;
+    }
+
+    /* LOGO */
+
+    .logo {
+        position: relative;
+        display: block;
+        width: 85px;
+        height: 85px;
+        object-fit: contain;
+        margin: 0 auto 8px;
+    }
+
+    .certificate h2 {
+        position: relative;
+        margin: 0;
+        color: #071f3d;
+        font-size: 30px;
+        letter-spacing: 0.5px;
+    }
+
+    .subtitle {
+        position: relative;
+        margin-top: 8px;
+        color: #666;
+        font-size: 14px;
+    }
+
+    .recipient {
+        position: relative;
+        margin: 18px 0 8px;
+        font-size: 28px;
+        font-weight: bold;
+        color: #071f3d;
+    }
+
+    .course {
+        position: relative;
+        font-size: 18px;
+        font-weight: bold;
+        color: #1683d8;
+        margin: 8px auto 18px;
+        max-width: 700px;
+    }
+
+    /* MAIN CERTIFICATE CONTENT */
+
+    .certificate-content {
+        position: relative;
+        display: grid;
+        grid-template-columns: 1fr 360px;
+        align-items: start;
+        gap: 25px;
+        margin-top: 12px;
+    }
+
+    .details {
+        position: relative;
+        width: 100%;
+        margin: 0;
+        text-align: left;
+        border-top: 1px solid #ddd;
+    }
+
+    .detail-row {
+        display: flex;
+        border-bottom: 1px solid #e5e5e5;
+        padding: 7px 0;
+        font-size: 13px;
+    }
+
+    .label {
+        width: 40%;
+        font-weight: bold;
+        color: #071f3d;
+    }
+
+    .value {
+        width: 60%;
+        color: #333;
+    }
+
+    .issuer-name {
+        font-weight: bold;
+        color: #071f3d;
+    }
+
+    .status {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 20px;
+        background: #dff5e5;
+        color: #18733c;
+        font-weight: bold;
+        font-size: 12px;
+    }
+
+    /* QR + CEO SIGNATURE */
+
+    .verification-panel {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 18px;
+        min-height: 175px;
+        padding: 12px;
+        border: 1px solid #d9e1ea;
+        border-radius: 8px;
+        background: #f8fafc;
+    }
+
+    /* QR SECTION */
+
+    .qr-section {
+        position: relative;
+        flex: 0 0 145px;
+        text-align: center;
+    }
+
+    .qr-section h3 {
+        margin: 0 0 8px;
+        color: #071f3d;
+        font-size: 12px;
+    }
+
+    .qr-section img {
+        display: block;
+        width: 125px;
+        height: 125px;
+        margin: 0 auto;
+        border: 1px solid #ddd;
+        padding: 5px;
+        background: white;
+    }
+
+    .qr-section p {
+        margin: 6px 0 0;
+        color: #666;
+        font-size: 9px;
+        line-height: 1.3;
+    }
+
+    /* CEO SIGNATURE */
+
+    .signature-section {
+        position: relative;
+        flex: 1;
+        margin: 0;
+        text-align: center;
+    }
+
+    .signature-line {
+        width: 165px;
+        border-top: 1px solid #222;
+        margin: 25px auto 6px;
+    }
+
+    .signature-name {
+        font-weight: bold;
+        color: #071f3d;
+        font-size: 13px;
+    }
+
+    .signature-title {
+        color: #555;
+        font-size: 11px;
+        margin-top: 3px;
+    }
+
+    .signature-company {
+        color: #555;
+        font-size: 11px;
+        margin-top: 2px;
+    }
+
+    /* CERTIFICATE FOOTER */
+
+    .certificate-footer {
+        position: relative;
+        margin-top: 18px;
+        padding-top: 8px;
+        border-top: 1px solid #d9e1ea;
+        text-align: center;
+        color: #071f3d;
+        font-size: 12px;
+        font-weight: 900;
+        letter-spacing: 0.4px;
+    }
+
+    .certificate-footer span {
+        margin: 0 8px;
+        color: #1683d8;
+        font-weight: 900;
+    }
+
+    /* ACTION BUTTONS */
+
+    .actions {
+        position: relative;
+        margin-top: 18px;
+    }
+
+    .button {
+        display: inline-block;
+        padding: 9px 16px;
+        margin: 3px;
+        background: #071f3d;
+        color: white;
+        text-decoration: none;
+        border: none;
+        border-radius: 5px;
+        font-size: 13px;
+        cursor: pointer;
+    }
+
+    .button:hover {
+        background: #1683d8;
+    }
+
+    .back {
+        background: #777;
+    }
+
+    .back:hover {
+        background: #555;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 750px) {
+
+        .container {
+            margin: 15px auto;
+            padding: 0 10px;
+        }
+
+        .certificate {
+            border-width: 5px;
+            padding: 25px 18px;
+        }
+
+        .certificate h2 {
+            font-size: 25px;
+        }
+
+        .recipient {
+            font-size: 24px;
+        }
+
+        .course {
+            font-size: 16px;
+        }
+
+        .certificate-content {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .details {
+            width: 100%;
+        }
+
+        .verification-panel {
+            width: 100%;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .qr-section {
+            width: 100%;
+        }
+
+        .signature-section {
+            width: 100%;
+        }
+
+        .detail-row {
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .label,
+        .value {
+            width: 100%;
+        }
+
+        .button {
+            display: block;
+            width: 100%;
+            margin: 6px 0;
+        }
+
+    }
+
+    /* PRINT */
+
+    @media print {
+
+        @page {
+            size: A4 landscape;
+            margin: 5mm;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background: white;
+        }
+
+        .certificate-footer {
+            margin-top: 10px;
+            padding-top: 6px;
+            font-size: 10px;
+            font-weight: 900;
+        }
+
+        /* KEEP FIS BACKGROUND WHEN PRINTING */
+
+        .certificate {
+            background: linear-gradient(
+                135deg,
+                #eef5fb 0%,
+                #ffffff 45%,
+                #e8f1f8 100%
+            );
+        }
+
+        .header,
+        .actions {
+            display: none !important;
+        }
+
+        .container {
+            width: 100%;
+            max-width: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .certificate {
+            width: 100%;
+            height: 185mm;
+            margin: 0;
+            padding: 22px 35px;
+            border-width: 6px;
+            box-shadow: none;
+            overflow: hidden;
+        }
+
+        .certificate::before {
+            top: 8px;
+            left: 8px;
+            right: 8px;
+            bottom: 8px;
+        }
+
+        /* LOGO */
+
+        .logo {
+            width: 68px;
+            height: 68px;
+            margin: 0 auto 5px;
+        }
+
+        /* TITLE */
+
+        .certificate h2 {
+            font-size: 29px;
+            margin: 0;
+        }
+
+        .subtitle {
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        /* RECIPIENT */
+
+        .recipient {
+            font-size: 28px;
+            margin: 10px 0 5px;
+        }
+
+        /* COURSE */
+
+        .course {
+            font-size: 17px;
+            margin: 6px auto 12px;
+            max-width: 750px;
+        }
+
+        /* MAIN CONTENT */
+
+        .certificate-content {
+            grid-template-columns: 1fr 350px;
+            gap: 25px;
+            margin-top: 10px;
+        }
+
+        .details {
+            width: 100%;
+            margin: 0;
+        }
+
+        .detail-row {
+            padding: 5px 0;
+            font-size: 12px;
+        }
+
+        .label {
+            width: 38%;
+        }
+
+        .value {
+            width: 62%;
+        }
+
+        .status {
+            padding: 3px 10px;
+            font-size: 10px;
+        }
+
+        /* QR + SIGNATURE */
+
+        .verification-panel {
+            min-height: 155px;
+            padding: 8px;
+            gap: 10px;
+        }
+
+        .qr-section {
+            flex: 0 0 135px;
+        }
+
+        .qr-section h3 {
+            font-size: 10px;
+            margin-bottom: 5px;
+        }
+
+        .qr-section img {
+            width: 115px;
+            height: 115px;
+            padding: 4px;
+        }
+
+        .qr-section p {
+            font-size: 8px;
+            margin-top: 4px;
+        }
+
+        .signature-section {
+            flex: 1;
+        }
+
+        .signature-line {
+            width: 155px;
+            margin: 18px auto 5px;
+        }
+
+        .signature-name {
+            font-size: 12px;
+        }
+
+        .signature-title,
+        .signature-company {
+            font-size: 9px;
+            margin-top: 2px;
+        }
+
+    }
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+    <h1>FOUNTAIN VERIFY</h1>
+
+    <p>
+        Certificate Verification System
+    </p>
+
+</div>
+
+<div class="container">
+
+    <div class="certificate">
+
+        <!-- FIS LOGO -->
+
+        <img
+            src="/images/fisnew.jpg"
+            alt="Fountain Information Service Logo"
+            class="logo">
+
+        <h2>
+            Certificate of Achievement
+        </h2>
+
+        <div class="subtitle">
+            This certificate is proudly presented to
+        </div>
+
+        <div
+            class="recipient"
+            th:text="${certificate.recipientName}">
+
+            Recipient Name
+
+        </div>
+
+        <div class="subtitle">
+            for successfully completing
+        </div>
+
+        <div
+            class="course"
+            th:text="${certificate.courseName}">
+
+            Course Name
+
+        </div>
+
+        <div class="certificate-content">
+
+            <!-- CERTIFICATE DETAILS -->
+
+            <div class="details">
+
+                <div class="detail-row">
+
+                    <div class="label">
+                        Certificate Number
+                    </div>
+
+                    <div
+                        class="value"
+                        th:text="${certificate.certificateNumber}">
+
+                        FV-2026-0001
+
+                    </div>
+
+                </div>
+
+                <div class="detail-row">
+
+                    <div class="label">
+                        Issuer
+                    </div>
+
+                    <div
+                        class="value issuer-name"
+                        th:text="${certificate.issuerName}">
+
+                        Fountain Information Service
+
+                    </div>
+
+                </div>
+
+                <div class="detail-row">
+
+                    <div class="label">
+                        Issue Date
+                    </div>
+
+                    <div
+                        class="value"
+                        th:text="${certificate.issueDate}">
+
+                        2026-10-02
+
+                    </div>
+
+                </div>
+
+                <div class="detail-row">
+
+                    <div class="label">
+                        Expiry Date
+                    </div>
+
+                    <div
+                        class="value"
+                        th:text="${certificate.expiryDate != null ? certificate.expiryDate : 'No Expiry'}">
+
+                        No Expiry
+
+                    </div>
+
+                </div>
+
+                <div class="detail-row">
+
+                    <div class="label">
+                        Status
+                    </div>
+
+                    <div class="value">
+
+                        <span
+                            class="status"
+                            th:text="${certificate.status}">
+
+                            ACTIVE
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- QR CODE + CEO SIGNATURE -->
+
+            <div class="verification-panel">
+
+                <!-- QR CODE -->
+
+                <div class="qr-section">
+
+                    <h3>
+                        Certificate Verification
+                    </h3>
+
+                    <img
+                        th:attr="src=|data:image/png;base64,${certificate.qrCode}|"
+                        alt="Certificate Verification QR Code">
+
+                    <p>
+                        Scan to verify
+                    </p>
+
+                </div>
+
+                <!-- CEO SIGNATURE -->
+
+                <div class="signature-section">
+
+                    <div class="signature-line"></div>
+
+                    <div class="signature-name">
+                        Egbunu Malik David
+                    </div>
+
+                    <div class="signature-title">
+                        Chief Executive Officer (CEO)
+                    </div>
+
+                    <div class="signature-company">
+                        Fountain Information Service (FIS)
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- CERTIFICATE FOOTER -->
+
+        <div class="certificate-footer">
+
+            www.fountinfo.com.ng
+
+            <span>|</span>
+
+            +234 816 477 0129
+
+        </div>
+
+
+		<!-- ACTION BUTTONS -->
+
+		<div class="actions">
+		    <a th:if="${studentView}"
+		       href="/my-certificates"
+		       class="button back">
+		        Back to My Certificates
+		    </a>
+
+		    <a th:unless="${studentView}"
+		       href="/certificates/list"
+		       class="button back">
+		        Back to Certificates
+		    </a>
+
+		    <button onclick="window.print()" class="button">
+		        Print Certificate
+		    </button>
+
+		    <form th:unless="${studentView}"
+		          th:action="@{/certificates/regenerate-qr/{id}(id=${certificate.id})}"
+		          method="post"
+		          style="display: inline-block;">
+
+		        <button type="submit"
+		                class="button"
+		                onclick="return confirm('Regenerate the QR code for this certificate?');">
+		            Regenerate QR Code
+		        </button>
+		    </form>
+		</div>
+    </div>
+
+</div>
+
+</body>
+
+</html>

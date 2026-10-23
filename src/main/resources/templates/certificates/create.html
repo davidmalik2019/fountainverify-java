@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Fountain Verify - Create Certificate</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        .header {
+            background: #062d6e;
+            color: white;
+            padding: 20px 30px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .card h2 {
+            margin-top: 0;
+            color: #062d6e;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #062d6e;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 20px;
+            background: #062d6e;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background: #041f4d;
+        }
+
+        .back {
+            display: inline-block;
+            margin-left: 10px;
+            padding: 12px 20px;
+            background: #777;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        .back:hover {
+            background: #555;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="header">
+
+        <h1>Fountain Verify</h1>
+
+    </div>
+
+
+    <div class="container">
+
+        <div class="card">
+
+            <h2>Create Certificate</h2>
+
+            <form th:action="@{/certificates/create}" method="post">
+
+                <div class="form-group">
+
+                    <label for="certificateNumber">
+                        Certificate Number
+                    </label>
+
+                    <input
+                        type="text"
+                        id="certificateNumber"
+                        name="certificateNumber"
+                        placeholder="Example: FIS-2026-0001"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="recipientName">
+                        Recipient Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="recipientName"
+                        name="recipientName"
+                        placeholder="Enter recipient's full name"
+                        required
+                    >
+
+                </div>
+				<div class="form-group">
+				    <label for="userId">Certificate Owner</label>
+
+				    <select id="userId" name="userId" required>
+				        <option value="">-- Select User --</option>
+
+				        <option th:each="user : ${users}"
+				                th:value="${user.id}"
+				                th:text="${user.username + ' - ' + user.email}">
+				        </option>
+				    </select>
+				</div>
+
+                <div class="form-group">
+
+                    <label for="courseName">
+                        Course / Program
+                    </label>
+
+                    <input
+                        type="text"
+                        id="courseName"
+                        name="courseName"
+                        placeholder="Example: Professional Executive Assistant"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="issuerName">
+                        Issuer Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="issuerName"
+                        name="issuerName"
+                        placeholder="Example: Fountain Information Service"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="issueDate">
+                        Issue Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="issueDate"
+                        name="issueDate"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="expiryDate">
+                        Expiry Date (Optional)
+                    </label>
+
+                    <input
+                        type="date"
+                        id="expiryDate"
+                        name="expiryDate"
+                    >
+
+                </div>
+
+
+                <button type="submit" class="button">
+                    Create Certificate
+                </button>
+
+
+                <a href="/dashboard" class="back">
+                    Back to Dashboard
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
