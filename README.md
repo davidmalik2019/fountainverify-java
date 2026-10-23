@@ -20,18 +20,17 @@ The application provides certificate management and user-facing features through
 - **Database Integration:** Use repositories and services to organize certificate and user data.
 
 ## Technologies Used
+
 - Java 25
 - Spring Boot 4.1.1
-- Java
-- Spring Boot
 - Spring Security
 - Spring Data JPA
 - MySQL
 - Maven
 - Thymeleaf
 - HTML and CSS
-- QR code generation
-
+- ZXing (QR code generation)
+  
 ## Project Structure
 
 The application follows a layered structure:
