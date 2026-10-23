@@ -2,22 +2,24 @@
 
 **A Certificate Verification System Built with Spring Boot**
 
-Fountain Verify Java is a web-based application developed to help manage certificates and support certificate verification. The project demonstrates Java backend development, database integration, web application security, and QR-code-based verification.
+Fountain Verify Java is a web-based certificate management and verification application developed as a Fountain Information Service project. It demonstrates practical Java backend development, database integration, web application security, and QR-code-based certificate verification.
 
 ## Project Overview
 
-The application provides certificate management and user-facing features through a web interface built with Spring Boot.
+The application provides certificate management and verification features through a web interface built with Spring Boot, Thymeleaf, and MySQL.
+
+The project demonstrates how a database-backed web application can organize certificate records, manage user access, and support certificate verification workflows.
 
 ## Key Features
 
 - **Certificate Management:** Create, view, edit, and manage certificate records.
 - **Certificate Verification:** Provide a verification page for checking certificate information.
-- **QR Code Functionality:** Generate and manage QR codes associated with certificates.
+- **QR Code Generation:** Generate QR codes associated with certificates to support verification workflows.
 - **User Authentication:** Support user registration, login, and logout.
 - **User Dashboard:** Provide dashboard and certificate-related pages.
 - **Profile Management:** Allow users to view and manage profile information.
-- **Password Management:** Include password-change and password-reset functionality.
-- **Database Integration:** Use repositories and services to organize certificate and user data.
+- **Password Management:** Provide password-related management features.
+- **Database Integration:** Use Spring Data JPA repositories and services to organize certificate and user data.
 
 ## Technologies Used
 
@@ -29,8 +31,8 @@ The application provides certificate management and user-facing features through
 - Maven
 - Thymeleaf
 - HTML and CSS
-- ZXing (QR code generation)
-  
+- ZXing for QR code generation
+
 ## Project Structure
 
 The application follows a layered structure:
@@ -40,8 +42,8 @@ The application follows a layered structure:
 - `repository` — provides database access.
 - `entity` — defines database entities.
 - `dto` — contains data-transfer objects.
-- `config` — contains application security configuration.
-- `src/main/resources/templates` — contains Thymeleaf HTML templates.
+- `config` — contains application configuration, including security.
+- `src/main/resources/templates` — contains Thymeleaf templates.
 - `src/main/resources/static` — contains static assets.
 - `src/test` — contains application test code.
 
@@ -49,70 +51,83 @@ The application follows a layered structure:
 
 To run the project locally, you will need:
 
-- A compatible Java JDK.
+- Java Development Kit (JDK) compatible with the project.
 - MySQL Server.
 - Git.
-- An IDE such as Spring Tool Suite, or a terminal for Maven commands.
+- Spring Tool Suite or another compatible Java IDE, or a terminal for Maven commands.
 
 ## Running the Project Locally
 
-1. Clone the repository:
+### 1. Clone the Repository
 
-   ```bash
-   git clone https://github.com/davidmalik2019/fountainverify-java.git
-   ```
+```bash
+git clone https://github.com/davidmalik2019/fountainverify-java.git
+```
 
-2. Open the project in Spring Tool Suite or another compatible Java IDE.
+### 2. Open the Project
 
-3. Create a MySQL database named `fountainverify`, or configure the application to use your own database.
+Open the cloned project in Spring Tool Suite or another compatible Java IDE.
 
-4. Configure the database connection and other required settings in your local Spring Boot configuration. Use your own database credentials and keep private credentials out of GitHub.
+### 3. Configure the Database
 
-5. Run the application using your IDE or the Maven wrapper:
+Create a MySQL database named `fountainverify`, or configure the application to use your own database.
 
-   **Windows:**
+Configure the database connection and other required settings in your local Spring Boot configuration. Use your own database credentials and keep private configuration files out of GitHub.
 
-   ```cmd
-   mvnw.cmd spring-boot:run
-   ```
+### 4. Run the Application
 
-   **Linux/macOS:**
+On Windows, use:
 
-   ```bash
-   ./mvnw spring-boot:run
-   ```
+```cmd
+mvnw.cmd spring-boot:run
+```
 
-6. Open the local application at:
+On Linux or macOS, use:
 
-   `http://localhost:8080`
+```bash
+./mvnw spring-boot:run
+```
 
-   The exact pages available depend on the application's configured routes.
+You can also run the application from your IDE.
+
+### 5. Open the Application
+
+Once the application has started, open:
+
+`http://localhost:8080`
+
+The available pages depend on the application's configured routes and access permissions.
+
 ## Testing
 
 The project includes automated tests using the Spring Boot testing framework.
 
-To run the tests on Windows, ensure MySQL is running and the local database configuration is correct, then execute:
+Ensure MySQL is running and the local database configuration is correct before running the tests.
+
+On Windows:
 
 ```cmd
 mvnw.cmd test
 ```
 
-To run a clean build and package the application:
+To perform a clean build and package the application:
 
 ```cmd
 mvnw.cmd clean package
 ```
 
-**Verified locally:** The test command completed successfully, and the clean package build succeeded with MySQL running.
+**Local verification:** The automated test command and clean package build completed successfully in the development environment with MySQL running.
+
 ## Security
 
 - Do not commit database passwords, secret keys, or other private credentials.
-- Configure environment-specific settings locally or through your hosting provider.
-- Review security settings before deploying the application to a public server.
+- Keep environment-specific configuration outside the public repository.
+- Use appropriate credentials and database permissions for each environment.
+- Review authentication, authorization, and database configuration before deploying the application to a public server.
 
 ## Developer Portfolio
 
-This project is part of my Java backend development portfolio, demonstrating practical work with Java, Spring Boot, database-backed applications, authentication, and certificate-verification workflows.
+Fountain Verify Java is part of my Java backend development portfolio. It demonstrates practical experience with Java, Spring Boot, Spring Security, database-backed applications, user authentication, and certificate-verification workflows.
 
 ## Repository
 
