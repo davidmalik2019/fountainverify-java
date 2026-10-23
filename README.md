@@ -2,13 +2,13 @@
 
 **A Certificate Verification System Built with Spring Boot**
 
-Fountain Verify Java is a web-based certificate management and verification application developed as a Fountain Information Service project. It demonstrates Java backend development, database integration, web application security, and QR-code-based certificate verification.
+Fountain Verify Java is a web-based certificate management and verification application developed as a Fountain Information Service project. It demonstrates practical Java backend development, database integration, web application security, and QR-code-based certificate verification.
 
 ## Project Overview
 
 The application provides certificate management and verification features through a web interface built with Spring Boot, Thymeleaf, and MySQL.
 
-The project demonstrates how a database-backed web application can organize certificate records, manage user access, and support certificate-verification workflows.
+The project demonstrates how a database-backed web application can organize certificate records, manage user access, and support certificate verification workflows.
 
 ## Key Features
 
